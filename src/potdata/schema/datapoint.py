@@ -226,6 +226,10 @@ class DataPoint(BaseModel):
             provenance=Provenance(job_uuid=job_uuid, task_type=task_type, frame=frame),
         )
 
+    def to_ase_atoms(self) -> Atoms:
+        """Convert the data point to an ASE atoms object."""
+        return AseAtomsAdaptor.get_atoms(self.structure)
+
     def get_cohesive_energy(self, reference_energy: dict[str, float] = None) -> float:
         """Get the cohesive energy of the configuration.
 
@@ -297,6 +301,9 @@ class DataCollection(BaseModel):
 
     def __iter__(self):
         return iter(self.data_points)
+
+    def __repr__(self):
+        return f"DataCollection(label={self.label}, num_data_points={len(self)})"
 
     def __add__(self, other):
         data_points = self.data_points + other.data_points

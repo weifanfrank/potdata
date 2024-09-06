@@ -16,6 +16,7 @@ def get_coords_range(
         y_range: tuple of min and max y coords
         z_range: tuple of min and max z coords
     """
+    coords = np.asarray(coords)
     x_range = (coords[:, 0].min(), coords[:, 0].max())
     y_range = (coords[:, 1].min(), coords[:, 1].max())
     z_range = (coords[:, 2].min(), coords[:, 2].max())
@@ -50,7 +51,7 @@ def create_dummy_cell(coords: np.ndarray, padding: float = 100) -> np.ndarray:
     """
     x_range, y_range, z_range = get_coords_range(coords)
 
-    cell = np.array(
+    cell = np.asarray(
         [
             [x_range[1] - x_range[0] + padding, 0, 0],
             [0, y_range[1] - y_range[0] + padding, 0],
